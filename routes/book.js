@@ -5,12 +5,7 @@ import {
     getBookById,
     updateBook,
     deleteBook,
-    getBookSummary,
-    updateBookSummary,
     searchBooks,
-    getBookAuthor,
-    updateBookAuthor,
-    deleteBookAuthor
 } from "../controllers/book.js";
 
 const router = express.Router();
@@ -18,16 +13,10 @@ const router = express.Router();
 router.get("/", getBooks);
 router.post("/", createBook);
 
-router.get("/summary/:id", getBookSummary);
-router.put("/summary/:id", updateBookSummary);
 router.get("/search", searchBooks);
 
 router.get("/:id", getBookById);
 router.put("/:id", updateBook);
 router.delete("/:id", deleteBook);
-
-router.get("/:id/author", getBookAuthor);
-router.put("/:id/author", updateBookAuthor);
-router.delete("/:id/author", deleteBookAuthor);
 
 export default router;

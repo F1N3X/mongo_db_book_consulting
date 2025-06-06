@@ -47,22 +47,6 @@ export const deleteBook = async (req, res) => {
     res.status(200).json({ message: "Book deleted successfully" });
 };
 
-export const getBookSummary = async (req, res) => {
-    const book = await Book.findById(req.params.id);
-    if (!book) {
-        return res.status(404).json({ message: "Book not found" });
-    }
-    res.status(200).json(book.summary);
-};
-
-export const updateBookSummary = async (req, res) => {
-    const book = await Book.findByIdAndUpdate(req.params.id, { summary: req.body.summary }, { new: true });
-    if (!book) {
-        return res.status(404).json({ message: "Book not found" });
-    }
-    res.status(200).json(book.summary);
-};
-
 export const searchBooks = async (req, res) => {
     const { q } = req.query;
     if (!q) {
@@ -97,28 +81,4 @@ export const searchBooks = async (req, res) => {
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
-};
-
-export const getBookAuthor = async (req, res) => {
-    const book = await Book.findById(req.params.id);
-    if (!book) {
-        return res.status(404).json({ message: "Book not found" });
-    }
-    res.status(200).json(book.author);
-};
-
-export const updateBookAuthor = async (req, res) => {
-    const book = await Book.findByIdAndUpdate(req.params.id, { author: req.body.author }, { new: true });
-    if (!book) {
-        return res.status(404).json({ message: "Book not found" });
-    }
-    res.status(200).json(book.author);
-};
-
-export const deleteBookAuthor = async (req, res) => {
-    const book = await Book.findByIdAndUpdate(req.params.id, { author: null }, { new: true });
-    if (!book) {
-        return res.status(404).json({ message: "Book not found" });
-    }
-    res.status(200).json({ message: "Book author deleted successfully" });
 };
