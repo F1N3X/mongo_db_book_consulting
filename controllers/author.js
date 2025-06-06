@@ -38,24 +38,3 @@ export const deleteAuthor = async (req, res) => {
     }
     res.status(200).json({ message: "Author deleted successfully" });
 };
-
-export const getAuthorBio = async (req, res) => {
-    const author = await Author.findById(req.params.id);
-    if (!author) {
-        return res.status(404).json({ message: "Author not found" });
-    }
-    res.status(200).json(author.bio);
-};
-
-export const updateAuthorBio = async (req, res) => {
-    const author = await Author.findByIdAndUpdate(req.params.id, { bio: req.body.bio }, { new: true });
-    if (!author) {
-        return res.status(404).json({ message: "Author not found" });
-    }
-    res.status(200).json(author.bio);
-};
-
-export const findByName = async (req, res) => {
-    const authors = await Author.find({ name: { $regex: req.query.name, $options: "i" } });
-    res.status(200).json(authors);
-};
