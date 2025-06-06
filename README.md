@@ -44,6 +44,6 @@ L'API sera disponible sur `http://localhost:3000` (par défaut).
 - `GET /authors` : liste des auteurs
 - `POST /authors` : création d'un auteur
 - `GET /books/search?q=mot` : recherche avancée sur les livres et auteurs
-
+- `GET /books?populate=true` : informations sur l'auteur
 
 
