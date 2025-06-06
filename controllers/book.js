@@ -1,7 +1,8 @@
 import Book from "../models/Book.js";
 
 export const getBooks = async (req, res) => {
-    const books = await Book.find();
+    const books = await Book.find()
+        .populate('authors', 'name surname')
     res.status(200).json(books);
 };
 
@@ -16,7 +17,8 @@ export const createBook = async (req, res) => {
 };
 
 export const getBookById = async (req, res) => {
-    const book = await Book.findById(req.params.id);
+    const book = await Book.findById(req.params.id)
+        .populate('authors', 'name surname');
     if (!book) {
         return res.status(404).json({ message: "Book not found" });
     }
