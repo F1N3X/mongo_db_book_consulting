@@ -61,14 +61,21 @@ export const updateBookSummary = async (req, res) => {
     res.status(200).json(book.summary);
 };
 
-export const findByName = async (req, res) => {
-    let query = Book.find({ title: { $regex: req.query.title, $options: "i" } });
-    const shouldPopulate = req.query.populate === 'true';
-    if (shouldPopulate) {
-        query = query.populate('authors', 'name surname');
+export const searchBooks = async (req, res) => {
+    const { q } = req.query;
+    if (!q) {
+        return res.status(400).json({ message: "Search query is required" });
     }
-    const books = await query
-    res.status(200).json(books);
+    try {
+        const books = await Book.find(
+            { $text: { $search: q, $language: "fr" } },
+            { score: { $meta: "textScore" } }
+        ).sort({ score: { $meta: "textScore" } })
+
+        res.status(200).json(books);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
 };
 
 export const getBookAuthor = async (req, res) => {

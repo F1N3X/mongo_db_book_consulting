@@ -56,7 +56,7 @@ const BookSchema = new mongoose.Schema({
 
 BookSchema.index(
     { title: "text", summary: "text" }, 
-    { weights: { title: 5, summary: 1 } }
+    { weights: { title: 1, summary: 3 } }
 );
 
 BookSchema.methods.addAuthor = async function(authorId) {

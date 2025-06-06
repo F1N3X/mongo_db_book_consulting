@@ -7,7 +7,7 @@ import {
     deleteBook,
     getBookSummary,
     updateBookSummary,
-    findByName,
+    searchBooks,
     getBookAuthor,
     updateBookAuthor,
     deleteBookAuthor
@@ -20,7 +20,7 @@ router.post("/", createBook);
 
 router.get("/summary/:id", getBookSummary);
 router.put("/summary/:id", updateBookSummary);
-router.get("/search/by-name", findByName);
+router.get("/search", searchBooks);
 
 router.get("/:id", getBookById);
 router.put("/:id", updateBook);
