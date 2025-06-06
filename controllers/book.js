@@ -62,7 +62,12 @@ export const updateBookSummary = async (req, res) => {
 };
 
 export const findByName = async (req, res) => {
-    const books = await Book.find({ title: { $regex: req.query.title, $options: "i" } });
+    let query = Book.find({ title: { $regex: req.query.title, $options: "i" } });
+    const shouldPopulate = req.query.populate === 'true';
+    if (shouldPopulate) {
+        query = query.populate('authors', 'name surname');
+    }
+    const books = await query
     res.status(200).json(books);
 };
 
