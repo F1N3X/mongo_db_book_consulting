@@ -12,7 +12,7 @@ const BookSchema = new mongoose.Schema({
         ref: 'Author',
         validate: {
             validator: async function(v) {
-                return await mongoose.model('Author').findById(v);
+                return await mongoose.model('Author').find(v);
             },
             message: 'Author not found'
         }
