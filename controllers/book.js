@@ -1,5 +1,5 @@
 import Book from "../models/Book.js";
-
+import Author from "../models/Author.js";
 const QueryManager = (query, req) =>{
     const shouldPopulate = req.query.populate === 'true';
     if (shouldPopulate) {
@@ -74,7 +74,26 @@ export const searchBooks = async (req, res) => {
             { score: { $meta: "textScore" } }
         ).sort({ score: { $meta: "textScore" } }), req);
 
-        res.status(200).json(books);
+        const authors = await Author.find(
+            { $text: { $search: q, $language: "fr" } },
+            { score: { $meta: "textScore" } }
+        ).sort({ score: { $meta: "textScore" } });
+
+        let booksByAuthor = [];
+        if (authors.length > 0) {
+            const authorIds = authors.map(a => a._id);
+            booksByAuthor = await QueryManager(
+                Book.find({ authors: { $in: authorIds } }),
+                req
+            );
+        }
+
+        const allBooksMap = new Map();
+        books.forEach(book => allBooksMap.set(book._id.toString(), book));
+        booksByAuthor.forEach(book => allBooksMap.set(book._id.toString(), book));
+        const allBooks = Array.from(allBooksMap.values());
+
+        res.status(200).json(allBooks);
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
