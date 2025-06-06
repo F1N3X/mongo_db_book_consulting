@@ -1,8 +1,12 @@
 import Book from "../models/Book.js";
 
 export const getBooks = async (req, res) => {
-    const books = await Book.find()
-        .populate('authors', 'name surname')
+    const shouldPopulate = req.query.populate === 'true';
+    let query = Book.find();
+    if (shouldPopulate) {
+        query = query.populate('authors', 'name surname');
+    }
+    const books = await query
     res.status(200).json(books);
 };
 
