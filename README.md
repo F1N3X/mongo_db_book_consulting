@@ -30,9 +30,11 @@ Les principales fonctionnalités sont :
 3. Configurez la connexion à MongoDB dans le fichier `.env` si besoin.
 
 ## Lancement
-
 ```bash
-npm start
+npm run seed
+```
+```bash
+npm run dev
 ```
 
 L'API sera disponible sur `http://localhost:3000` (par défaut).
