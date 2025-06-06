@@ -17,7 +17,6 @@ const AuthorSchema = new mongoose.Schema({
     },
     bio: {
         type: String,
-        required: true,
         trim: true,
         maxlength: 1000
     },
